@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -7,9 +8,12 @@ using System.Text;
 
 namespace Pong.Scene
 {
-    class PongScene : DrawableGameComponent
+    class PongScene : IScene
     {
-        private readonly Game _game;
+        Texture2D ballTexture;
+        Texture2D paddleTexture;
+        Texture2D dummyTexture;
+        SpriteFont scoreFont;
 
         float ballSpeed;
         Rectangle ballHitbox;
@@ -29,23 +33,52 @@ namespace Pong.Scene
 
         Vector2 ballPosition;
 
-        public PongScene(Game game)
-            : base(game)
-        {
-            this._game = game;
+        public SceneManager SceneManager { get; set; }
 
-            ballPosition = new Vector2(game.Graphics.PreferredBackBufferWidth / 2, game.Graphics.PreferredBackBufferHeight / 2);
+        public PongScene()
+        {
+        }
+
+        public void Initialize()
+        {
+            Viewport view = SceneManager.GraphicsDevice.Viewport;
+
+            ballPosition = new Vector2(view.Width / 2, view.Height / 2);
             ballSpeed = 200f;
             ballXAngle = 1;
             ballYAngle = 1;
 
             paddleSpeed = 200f;
 
-            player1Position = new Vector2(paddleWidth / 2, game.Graphics.PreferredBackBufferHeight / 2);
-            player2Position = new Vector2(game.Graphics.PreferredBackBufferWidth - (paddleWidth / 2), game.Graphics.PreferredBackBufferHeight / 2);
+            player1Position = new Vector2(paddleWidth / 2, view.Height / 2);
+            player2Position = new Vector2(view.Width - (paddleWidth / 2), view.Height / 2);
         }
+
+        public void LoadContent()
+        {
+            ContentManager content = SceneManager.Game.Content;
+            scoreFont = content.Load<SpriteFont>("Score");
+            ballTexture = content.Load<Texture2D>("ball");
+
+            Color[] paddleData = new Color[paddleWidth * paddleHeight];
+            for (int n = 0; n < paddleData.Length; n++) paddleData[n] = Color.White;
+            paddleTexture = new Texture2D(SceneManager.GraphicsDevice, paddleWidth, paddleHeight);
+            paddleTexture.SetData(paddleData);
+
+            dummyTexture = new Texture2D(SceneManager.GraphicsDevice, 1, 1);
+            dummyTexture.SetData(new Color[] { Color.White });
+        }
+
+        public void UnloadContent()
+        {
+            // Unload any content created outside the ContentManager
+            paddleTexture.Dispose();
+            dummyTexture.Dispose();
+        }
+
         public void Update(GameTime gameTime)
         {
+            Viewport view = SceneManager.GraphicsDevice.Viewport;
             KeyboardState kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Up))
             {
@@ -91,13 +124,13 @@ namespace Pong.Scene
                 //player1Position.X += paddleSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (player1Position.Y > _graphics.PreferredBackBufferHeight - paddleTexture.Height / 2)
-                player1Position.Y = _graphics.PreferredBackBufferHeight - paddleTexture.Height / 2;
+            if (player1Position.Y > view.Height - paddleTexture.Height / 2)
+                player1Position.Y = view.Height - paddleTexture.Height / 2;
             else if (player1Position.Y < 0 + paddleTexture.Height / 2)
                 player1Position.Y = paddleTexture.Height / 2;
 
-            if (player2Position.Y > _graphics.PreferredBackBufferHeight - paddleTexture.Height / 2)
-                player2Position.Y = _graphics.PreferredBackBufferHeight - paddleTexture.Height / 2;
+            if (player2Position.Y > view.Height - paddleTexture.Height / 2)
+                player2Position.Y = view.Height - paddleTexture.Height / 2;
             else if (player2Position.Y < 0 + paddleTexture.Height / 2)
                 player2Position.Y = paddleTexture.Height / 2;
 
@@ -110,19 +143,18 @@ namespace Pong.Scene
                 ballXAngle = 1;
             }
 
-
-            if (ballPosition.X > _graphics.PreferredBackBufferWidth - ballTexture.Width / 2)
+            if (ballPosition.X > view.Width - ballTexture.Width / 2)
             {
-                ballPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+                ballPosition = new Vector2(view.Width / 2, view.Height / 2);
                 player2Score++;
             }
             else if (ballPosition.X < 0 + ballTexture.Width / 2)
             {
-                ballPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+                ballPosition = new Vector2(view.Width / 2, view.Height / 2);
                 player1Score++;
             }
 
-            if (ballPosition.Y > _graphics.PreferredBackBufferHeight - ballTexture.Height / 2)
+            if (ballPosition.Y > view.Height - ballTexture.Height / 2)
                 ballYAngle = 1;
             else if (ballPosition.Y < 0 + ballTexture.Height / 2)
                 ballYAngle = -1;
@@ -131,10 +163,65 @@ namespace Pong.Scene
             ballPosition.X -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds * ballXAngle;
             ballPosition.Y -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds * ballYAngle;
 
+            updateHitboxes();
+
+            //System.Diagnostics.Debug.WriteLine($"Ball Position: {ballPosition.X}, {ballPosition.Y}");
+
         }
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            SpriteBatch spriteBatch = SceneManager.SpriteBatch;
+            Viewport view = SceneManager.GraphicsDevice.Viewport;
+            spriteBatch.Begin();
+
+            spriteBatch.DrawString(scoreFont, $"{player1Score}", new Vector2(view.Width / 2 - 25, 50), Color.White);
+            spriteBatch.DrawString(scoreFont, $"{player2Score}", new Vector2(view.Width / 2 + 25, 50), Color.White);
+
+            spriteBatch.Draw(
+                ballTexture,
+                ballPosition,
+                null,
+                Color.White,
+                0f,
+                new Vector2(ballTexture.Width / 2, ballTexture.Height / 2),
+                Vector2.One,
+                SpriteEffects.None,
+                0f
+            );
+
+            spriteBatch.Draw(paddleTexture,
+                player1Position,
+                null,
+                Color.Blue,
+                0f,
+                new Vector2(paddleTexture.Width / 2, paddleTexture.Height / 2),
+                Vector2.One,
+                SpriteEffects.None,
+                0f
+                );
+
+            spriteBatch.Draw(paddleTexture,
+                player2Position,
+                null,
+                Color.Red,
+                0f,
+                new Vector2(paddleTexture.Width / 2, paddleTexture.Height / 2),
+                Vector2.One,
+                SpriteEffects.None,
+                0f
+                );
+
+            //_spriteBatch.Draw(dummyTexture, Utility.createHitbox(player1Position, paddleTexture), Color.DarkRed);
+            //_spriteBatch.Draw(dummyTexture, Utility.createHitbox(ballPosition, ballTexture), Color.DarkRed);
+
+            spriteBatch.End();
+        }
+
+        void updateHitboxes()
+        {
+            player1Hitbox = Utility.createHitbox(player1Position, paddleTexture);
+            player2Hitbox = Utility.createHitbox(player2Position, paddleTexture);
+            ballHitbox = Utility.createHitbox(ballPosition, ballTexture);
         }
     }
 }
