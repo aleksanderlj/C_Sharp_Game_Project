@@ -25,7 +25,7 @@ namespace Pong
         protected override void Initialize()
         {
             //System.Diagnostics.Debug.WriteLine("Initializing...");
-            sceneManager.AddScene(new PongScene());
+            sceneManager.AddScene(new StartScene());
             base.Initialize();
         }
 

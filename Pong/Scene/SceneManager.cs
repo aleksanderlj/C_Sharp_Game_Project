@@ -11,6 +11,7 @@ namespace Pong.Scene
     {
         public SpriteBatch SpriteBatch { get; set; } // Shared SpriteBatch for scenes
         private List<IScene> scenes = new List<IScene>();
+        private List<IScene> scenesToUpdate = new List<IScene>();
 
         public SceneManager(Game game) : base(game)
         {
@@ -25,6 +26,7 @@ namespace Pong.Scene
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
+            // Only the very first scenes have content loaded here. The rest has their content loaded in AddScene();
             foreach(IScene scene in scenes)
             {
                 scene.LoadContent();
@@ -44,8 +46,12 @@ namespace Pong.Scene
 
         public override void Update(GameTime gameTime)
         {
+            // Creates separate update list since a scene may add or remove scenes to the master list in an update
+            scenesToUpdate.Clear();
+            scenesToUpdate.AddRange(scenes);
+
             // TODO Order of Update depending on focus
-            foreach (IScene scene in scenes)
+            foreach (IScene scene in scenesToUpdate)
             {
                 scene.Update(gameTime);
             }
@@ -66,6 +72,7 @@ namespace Pong.Scene
         {
             scene.SceneManager = this;
             scene.Initialize();
+            scene.LoadContent();
             scenes.Add(scene);
         }
 
