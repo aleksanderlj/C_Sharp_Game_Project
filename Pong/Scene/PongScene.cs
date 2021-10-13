@@ -219,9 +219,9 @@ namespace Pong.Scene
 
         void updateHitboxes()
         {
-            player1Hitbox = Utility.createHitbox(player1Position, paddleTexture);
-            player2Hitbox = Utility.createHitbox(player2Position, paddleTexture);
-            ballHitbox = Utility.createHitbox(ballPosition, ballTexture);
+            player1Hitbox = UpdateUtility.createHitbox(player1Position, paddleTexture);
+            player2Hitbox = UpdateUtility.createHitbox(player2Position, paddleTexture);
+            ballHitbox = UpdateUtility.createHitbox(ballPosition, ballTexture);
         }
     }
 }

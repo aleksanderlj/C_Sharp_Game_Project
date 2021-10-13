@@ -40,7 +40,9 @@ namespace Pong
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+            if (Keyboard.GetState().IsKeyDown(Keys.F5))
+                reset();
+
             base.Update(gameTime);
         }
 
@@ -50,6 +52,12 @@ namespace Pong
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             base.Draw(gameTime);
+        }
+
+        private void reset()
+        {
+            sceneManager.RemoveAllScenes();
+            sceneManager.AddScene(new StartScene());
         }
 
     }

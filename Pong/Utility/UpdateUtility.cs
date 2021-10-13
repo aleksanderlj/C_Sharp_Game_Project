@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Pong
 {
-    static class Utility
+    static class UpdateUtility
     {
         public static Rectangle createHitbox(Vector2 position, Texture2D texture)
         {

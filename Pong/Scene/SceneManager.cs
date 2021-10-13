@@ -10,11 +10,13 @@ namespace Pong.Scene
     class SceneManager : DrawableGameComponent
     {
         public SpriteBatch SpriteBatch { get; set; } // Shared SpriteBatch for scenes
+        private Game game;
         private List<IScene> scenes = new List<IScene>();
         private List<IScene> scenesToUpdate = new List<IScene>();
 
         public SceneManager(Game game) : base(game)
         {
+            this.game = game;
         }
 
         public override void Initialize()
@@ -36,7 +38,6 @@ namespace Pong.Scene
 
         protected override void UnloadContent()
         {
-
             foreach (IScene scene in scenes)
             {
                 scene.UnloadContent();
@@ -80,6 +81,20 @@ namespace Pong.Scene
         {
             scene.UnloadContent();
             scenes.Remove(scene);
+        }
+
+        public void RemoveAllScenes()
+        {
+            foreach (IScene scene in scenes)
+            {
+                scene.UnloadContent();
+            }
+            scenes.Clear();
+        }
+
+        public void ExitGame()
+        {
+            game.Exit();
         }
     }
 }
