@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Pong.Shooter;
 using Pong.Utility;
 using System;
@@ -36,7 +37,23 @@ namespace Pong.Scene
 
         public void Update(GameTime gameTime)
         {
-            
+            KeyboardState kstate = Keyboard.GetState();
+            if (kstate.IsKeyDown(Keys.Up))
+            {
+                player.MoveUp(gameTime);
+            }
+            if (kstate.IsKeyDown(Keys.Down))
+            {
+                player.MoveDown(gameTime);
+            }
+            if (kstate.IsKeyDown(Keys.Right))
+            {
+                player.MoveRight(gameTime);
+            }
+            if (kstate.IsKeyDown(Keys.Left))
+            {
+                player.MoveLeft(gameTime);
+            }
         }
 
         public void Draw(GameTime gameTime)
