@@ -21,13 +21,18 @@ namespace Pong.Scene
         {
             Viewport view = SceneManager.GraphicsDevice.Viewport;
             player = new PlayerShip();
-            player.Hitbox = new Rectangle(view.Width/10, view.Height/2, 100, 50);
+            player.Position = new Vector2(view.Width / 10, view.Height / 2);
+            player.Hitbox = new Rectangle(0, 0, 100, 50);
+            player.Color = Color.DarkGoldenrod;
+            player.Dampening = new Vector2(0.90f, 0.90f);
         }
 
         public void LoadContent()
         {
             blankTexture = new Texture2D(SceneManager.GraphicsDevice, 1, 1);
             blankTexture.SetData(new Color[] { Color.White });
+
+            player.Texture = blankTexture;
         }
 
         public void UnloadContent()
@@ -54,6 +59,8 @@ namespace Pong.Scene
             {
                 player.MoveLeft(gameTime);
             }
+
+            player.UpdateMovement(gameTime);
         }
 
         public void Draw(GameTime gameTime)
@@ -61,7 +68,7 @@ namespace Pong.Scene
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin();
 
-            spriteBatch.Draw(blankTexture, player.Hitbox, Color.DarkRed);
+            player.Draw(spriteBatch);
 
             spriteBatch.End();
         }

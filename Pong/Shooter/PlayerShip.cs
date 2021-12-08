@@ -1,33 +1,33 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Pong.Shooter
 {
-    class PlayerShip
+    class PlayerShip : Entity 
     {
-        public Rectangle Hitbox { get; set; }
-        private double speed = 200.0;
+        private float speed = 65.0f;
 
         public void MoveUp(GameTime gameTime)
         {
-            Hitbox = new Rectangle(Hitbox.X, Hitbox.Y - (int)(speed * gameTime.ElapsedGameTime.TotalSeconds), Hitbox.Width, Hitbox.Height);
+            Velocity = new Vector2(Velocity.X, Velocity.Y - speed);
         }
 
         public void MoveDown(GameTime gameTime)
         {
-            Hitbox = new Rectangle(Hitbox.X, Hitbox.Y + (int)(speed * gameTime.ElapsedGameTime.TotalSeconds), Hitbox.Width, Hitbox.Height);
+            Velocity = new Vector2(Velocity.X, Velocity.Y + speed);
         }
 
         public void MoveLeft(GameTime gameTime)
         {
-            Hitbox = new Rectangle(Hitbox.X - (int)(speed * gameTime.ElapsedGameTime.TotalSeconds), Hitbox.Y, Hitbox.Width, Hitbox.Height);
+            Velocity = new Vector2(Velocity.X - speed, Velocity.Y);
         }
 
         public void MoveRight(GameTime gameTime)
         {
-            Hitbox = new Rectangle(Hitbox.X + (int)(speed * gameTime.ElapsedGameTime.TotalSeconds), Hitbox.Y, Hitbox.Width, Hitbox.Height);
+            Velocity = new Vector2(Velocity.X + speed, Velocity.Y);
         }
     }
 }
