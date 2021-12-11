@@ -65,7 +65,7 @@ namespace Pong.Shooter.Entities
             Dampening = dampening;
         }
 
-        public void UpdateMovement(GameTime gameTime)
+        public virtual void UpdateMovement(GameTime gameTime)
         {
             // Position + (Velocity * elapsedTime)
             Position = Vector2.Add(

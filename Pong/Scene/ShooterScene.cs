@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Shooter;
 using Pong.Shooter.Entities;
+using Pong.Shooter.Entities.Enemies;
 using Pong.Shooter.Weapons;
 using Pong.Utility;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Pong.Scene
     {
         private PlayerShip player;
         private List<Projectile> projectiles;
+        private List<Enemy> enemies;
 
         public SceneManager SceneManager { get; set; }
 
@@ -20,6 +22,7 @@ namespace Pong.Scene
         {
             Viewport view = SceneManager.GraphicsDevice.Viewport;
             projectiles = new List<Projectile>();
+            enemies = new List<Enemy>();
             player = new PlayerShip();
             player.Initialize(view);
         }
@@ -28,6 +31,7 @@ namespace Pong.Scene
         {
             TextureManager.LoadContent(SceneManager.GraphicsDevice);
             player.Texture = TextureManager.Player;
+            enemies.Add(new Grunt(SceneManager.GraphicsDevice.Viewport));
         }
 
         public void UnloadContent()
@@ -61,19 +65,33 @@ namespace Pong.Scene
 
             player.UpdateMovement(gameTime);
 
+            foreach (Enemy e in enemies)
+            {
+                e.UpdateMovement(gameTime);
+                projectiles.AddRange(e.Shoot(gameTime));
+            }
+
             foreach (Projectile p in projectiles)
             {
                 p.UpdateMovement(gameTime);
             }
+
+            cleanup();
         }
 
         public void Draw(GameTime gameTime)
         {
+            SceneManager.GraphicsDevice.Clear(Color.Black);
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin();
 
             player.Draw(spriteBatch);
-            foreach(Projectile p in projectiles)
+            foreach (Enemy e in enemies)
+            {
+                e.Draw(spriteBatch);
+            }
+
+            foreach (Projectile p in projectiles)
             {
                 p.Draw(spriteBatch);
             }
@@ -81,6 +99,20 @@ namespace Pong.Scene
             DrawUtility.drawBorder(spriteBatch, player.Hitbox, Color.Red, 2); //Debug
 
             spriteBatch.End();
+        }
+
+        private void cleanup()
+        {
+            projectiles.RemoveAll(p => isOutOfBounds(p.Position));
+        }
+
+        private bool isOutOfBounds(Vector2 position)
+        {
+            Viewport view = SceneManager.GraphicsDevice.Viewport;
+            return position.X < view.Bounds.Left    ||
+                position.X > view.Bounds.Right      ||
+                position.Y > view.Bounds.Bottom     ||
+                position.X < view.Bounds.Top;
         }
     }
 }

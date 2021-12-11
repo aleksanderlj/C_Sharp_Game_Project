@@ -24,7 +24,7 @@ namespace Pong.Shooter.Weapons
                 bullet.Position = position;
                 bullet.Velocity = new Vector2(1000, 0);
                 bullet.Dampening = Vector2.One;
-                bullet.Hitbox = new Rectangle(0, 0, 5, 5);
+                bullet.Hitbox = new Rectangle(0, 0, 12, 8);
                 projectiles.Add(bullet);
             }
 

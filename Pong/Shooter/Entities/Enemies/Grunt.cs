@@ -7,32 +7,30 @@ using System.Text;
 
 namespace Pong.Shooter.Entities.Enemies
 {
-    class Grunt : Entity
+    class Grunt : Enemy
     {
         Weapon weapon;
         public Grunt(Viewport view)
         {
             weapon = new GruntGun();
-            Position = new Vector2(view.Width / 10, view.Height / 2);
-            Hitbox = new Rectangle(0, 0, 100, 50);
+            Position = new Vector2(view.Width - view.Width / 10, view.Height / 2);
+            Hitbox = new Rectangle(0, 0, 60, 50);
             Color = Color.DarkGoldenrod;
             Dampening = new Vector2(0.90f, 0.90f);
             Texture = TextureManager.Grunt;
         }
 
-        public List<Projectile> Shoot(GameTime gameTime)
+        public override List<Projectile> Shoot(GameTime gameTime)
         {
-            Vector2 bulletOrigin = new Vector2(Hitbox.Right, Hitbox.Center.Y);
+            Vector2 bulletOrigin = new Vector2(Hitbox.Left, Hitbox.Center.Y);
             return weapon.Shoot(gameTime, bulletOrigin);
         }
 
         public class GruntGun : Weapon
         {
-            private static Texture2D projectileTexture; // Static, so shared amongst all weapons of the same type
-
             public GruntGun()
             {
-                Cooldown = 0.5;
+                Cooldown = 1.5;
             }
 
             public override List<Projectile> Shoot(GameTime gameTime, Vector2 position)
