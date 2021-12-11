@@ -71,8 +71,23 @@ namespace Pong.Scene
                 projectiles.AddRange(e.Shoot(gameTime));
             }
 
-            foreach (Projectile p in projectiles)
+            for (int i = projectiles.Count - 1; i >= 0; i--)
             {
+                Projectile p = projectiles[i];
+                if (p.Origin == Origin.Hostile && p.Hitbox.Intersects(player.Hitbox))
+                {
+                    projectiles.RemoveAt(i);
+                    continue;
+                } else if (p.Origin == Origin.Friendly)
+                {
+                    Enemy e = enemies.Find(e => p.Hitbox.Intersects(e.Hitbox));
+                    if(e != null)
+                    {
+                        enemies.Remove(e);
+                        projectiles.RemoveAt(i);
+                        continue;
+                    }
+                }
                 p.UpdateMovement(gameTime);
             }
 

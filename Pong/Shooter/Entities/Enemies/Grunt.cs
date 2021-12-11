@@ -12,10 +12,15 @@ namespace Pong.Shooter.Entities.Enemies
         Weapon weapon;
         public Grunt(Viewport view)
         {
+            int width = 60;
+            int height = 50;
+            Random rnd = new Random();
+
             weapon = new GruntGun();
-            Position = new Vector2(view.Width - view.Width / 10, view.Height / 2);
-            Hitbox = new Rectangle(0, 0, 60, 50);
+            Position = new Vector2(view.Width + width, rnd.Next(0, view.Height));
+            Hitbox = new Rectangle(0, 0, width, height);
             Color = Color.DarkGoldenrod;
+            Velocity = new Vector2(rnd.Next(-2000, -1000), 0);
             Dampening = new Vector2(0.90f, 0.90f);
             Texture = TextureManager.Grunt;
         }
@@ -39,7 +44,7 @@ namespace Pong.Shooter.Entities.Enemies
 
                 if (IsReady(gameTime.TotalGameTime.TotalSeconds))
                 {
-                    Projectile bullet = new Projectile();
+                    Projectile bullet = new Projectile(Origin.Hostile);
                     bullet.Texture = TextureManager.GruntGunProjectile;
                     bullet.Color = Color.Red;
                     bullet.Position = position;

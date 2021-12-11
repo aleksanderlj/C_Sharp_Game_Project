@@ -18,7 +18,7 @@ namespace Pong.Shooter.Weapons
 
             if (IsReady(gameTime.TotalGameTime.TotalSeconds))
             {
-                Projectile bullet = new Projectile();
+                Projectile bullet = new Projectile(Origin.Friendly);
                 bullet.Texture = TextureManager.BasicGunProjectile;
                 bullet.Color = Color.Green;
                 bullet.Position = position;
