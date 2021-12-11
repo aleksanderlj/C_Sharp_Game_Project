@@ -25,6 +25,9 @@ namespace Pong
         protected override void Initialize()
         {
             //System.Diagnostics.Debug.WriteLine("Initializing...");
+            Graphics.PreferredBackBufferWidth = 1280;
+            Graphics.PreferredBackBufferHeight = 720;
+            Graphics.ApplyChanges();
             sceneManager.AddScene(new StartScene());
             base.Initialize();
         }
