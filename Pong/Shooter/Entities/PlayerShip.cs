@@ -1,16 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using Pong.Shooter.Weapons;
 using System.Collections.Generic;
-using System.Text;
-using static Pong.Shooter.Weapons;
 
-namespace Pong.Shooter
+namespace Pong.Shooter.Entities
 {
     class PlayerShip : Entity 
     {
         private float speed = 65.0f;
-        private List<ShootAction> weapons = new List<ShootAction>();
+        private List<Weapon> weapons = new List<Weapon>();
 
         public void MoveUp(GameTime gameTime)
         {
@@ -32,17 +29,17 @@ namespace Pong.Shooter
             Velocity = new Vector2(Velocity.X + speed, Velocity.Y);
         }
 
-        public void AddWeapon(ShootAction weapon)
+        public void AddWeapon(Weapon weapon)
         {
             weapons.Add(weapon);
         }
 
-        public List<Projectile> Shoot()
+        public List<Projectile> Shoot(GameTime gameTime)
         {
             List<Projectile> projectiles = new List<Projectile>();
-            foreach(ShootAction action in weapons)
+            foreach(Weapon w in weapons)
             {
-                projectiles.AddRange(action(Position));
+                projectiles.AddRange(w.Shoot(gameTime, Position));
             }
             return projectiles;
         }

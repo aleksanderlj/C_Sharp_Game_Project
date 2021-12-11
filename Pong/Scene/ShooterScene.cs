@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.Shooter;
-using Pong.Utility;
-using System;
+using Pong.Shooter.Entities;
+using Pong.Shooter.Weapons;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pong.Scene
 {
@@ -27,14 +25,14 @@ namespace Pong.Scene
             player.Hitbox = new Rectangle(0, 0, 100, 50);
             player.Color = Color.DarkGoldenrod;
             player.Dampening = new Vector2(0.90f, 0.90f);
-            player.AddWeapon(new Weapons.ShootAction(Weapons.BasicGun));
+            player.AddWeapon(new BasicGun());
         }
 
         public void LoadContent()
         {
             blankTexture = new Texture2D(SceneManager.GraphicsDevice, 1, 1);
             blankTexture.SetData(new Color[] { Color.White });
-            Weapons.LoadContent(SceneManager.GraphicsDevice);
+            WeaponManager.LoadContent(SceneManager.GraphicsDevice);
 
             player.Texture = blankTexture;
         }
@@ -42,7 +40,7 @@ namespace Pong.Scene
         public void UnloadContent()
         {
             blankTexture.Dispose();
-            Weapons.UnloadContent();
+            WeaponManager.UnloadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -66,7 +64,7 @@ namespace Pong.Scene
             }
             if (kstate.IsKeyDown(Keys.Space))
             {
-                projectiles.AddRange(player.Shoot());
+                projectiles.AddRange(player.Shoot(gameTime));
             }
 
             player.UpdateMovement(gameTime);
