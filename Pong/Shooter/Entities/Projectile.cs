@@ -6,6 +6,6 @@ namespace Pong.Shooter.Entities
 {
     class Projectile : Entity
     {
-
+        // Symbolic class
     }
 }

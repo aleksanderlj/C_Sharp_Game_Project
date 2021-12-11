@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pong.Shooter;
 using Pong.Shooter.Entities;
 using Pong.Shooter.Weapons;
 using Pong.Utility;
@@ -10,8 +11,6 @@ namespace Pong.Scene
 {
     class ShooterScene : IScene
     {
-        private Texture2D blankTexture;
-
         private PlayerShip player;
         private List<Projectile> projectiles;
 
@@ -22,26 +21,18 @@ namespace Pong.Scene
             Viewport view = SceneManager.GraphicsDevice.Viewport;
             projectiles = new List<Projectile>();
             player = new PlayerShip();
-            player.Position = new Vector2(view.Width / 10, view.Height / 2);
-            player.Hitbox = new Rectangle(0, 0, 100, 50);
-            player.Color = Color.DarkGoldenrod;
-            player.Dampening = new Vector2(0.90f, 0.90f);
-            player.AddWeapon(new BasicGun());
+            player.Initialize(view);
         }
 
         public void LoadContent()
         {
-            blankTexture = new Texture2D(SceneManager.GraphicsDevice, 1, 1);
-            blankTexture.SetData(new Color[] { Color.White });
-            WeaponManager.LoadContent(SceneManager.GraphicsDevice);
-
-            player.Texture = blankTexture;
+            TextureManager.LoadContent(SceneManager.GraphicsDevice);
+            player.Texture = TextureManager.Player;
         }
 
         public void UnloadContent()
         {
-            blankTexture.Dispose();
-            WeaponManager.UnloadContent();
+            TextureManager.UnloadContent();
         }
 
         public void Update(GameTime gameTime)

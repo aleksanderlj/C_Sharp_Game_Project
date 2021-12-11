@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pong.Shooter.Weapons;
 using System.Collections.Generic;
 
@@ -8,6 +9,15 @@ namespace Pong.Shooter.Entities
     {
         private float speed = 65.0f;
         private List<Weapon> weapons = new List<Weapon>();
+
+        public void Initialize(Viewport view)
+        {
+            Position = new Vector2(view.Width / 10, view.Height / 2);
+            Hitbox = new Rectangle(0, 0, 100, 50);
+            Color = Color.DarkGoldenrod;
+            Dampening = new Vector2(0.90f, 0.90f);
+            AddWeapon(new BasicGun());
+        }
 
         public void MoveUp(GameTime gameTime)
         {
