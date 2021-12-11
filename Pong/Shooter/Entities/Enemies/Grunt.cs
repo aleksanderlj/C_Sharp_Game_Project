@@ -17,10 +17,10 @@ namespace Pong.Shooter.Entities.Enemies
             Random rnd = new Random();
 
             weapon = new GruntGun();
-            Position = new Vector2(view.Width + width, rnd.Next(0, view.Height));
+            Position = new Vector2(view.Width + width, rnd.Next(50, view.Height - (height + 50)));
             Hitbox = new Rectangle(0, 0, width, height);
             Color = Color.DarkGoldenrod;
-            Velocity = new Vector2(rnd.Next(-2000, -1000), 0);
+            Velocity = new Vector2(rnd.Next(-2000, -1000), rnd.Next(-200, 200));
             Dampening = new Vector2(0.90f, 0.90f);
             Texture = TextureManager.Grunt;
         }
