@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Shooter.Entities;
 using Pong.Shooter.Weapons;
+using Pong.Utility;
 using System.Collections.Generic;
 
 namespace Pong.Scene
@@ -85,6 +86,8 @@ namespace Pong.Scene
             {
                 p.Draw(spriteBatch);
             }
+
+            DrawUtility.drawBorder(spriteBatch, player.Hitbox, Color.Red, 2); //Debug
 
             spriteBatch.End();
         }

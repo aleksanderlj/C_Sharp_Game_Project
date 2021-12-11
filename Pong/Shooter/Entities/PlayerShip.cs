@@ -37,9 +37,10 @@ namespace Pong.Shooter.Entities
         public List<Projectile> Shoot(GameTime gameTime)
         {
             List<Projectile> projectiles = new List<Projectile>();
+            Vector2 bulletOrigin = new Vector2(Hitbox.Right, Hitbox.Center.Y);
             foreach(Weapon w in weapons)
             {
-                projectiles.AddRange(w.Shoot(gameTime, Position));
+                projectiles.AddRange(w.Shoot(gameTime, bulletOrigin));
             }
             return projectiles;
         }
