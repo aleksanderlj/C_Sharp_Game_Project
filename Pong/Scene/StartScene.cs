@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Menu;
+using Pong.Shooter;
 using Pong.Utility;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,12 @@ namespace Pong.Scene
         }
         public void LoadContent()
         {
-            ContentManager content = SceneManager.Game.Content;
-            font = content.Load<SpriteFont>("BaseFont");
+            font = TextureManager.BaseFont;
         }
 
         public void UnloadContent()
         {
-            
+
         }
 
         public void Update(GameTime gameTime)
@@ -62,6 +62,7 @@ namespace Pong.Scene
             SceneManager.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(TextureManager.Title, Vector2.Zero, Color.White);
 
             /*
             String title = "Press enter to begin...";

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pong.Shooter;
 using System.Collections.Generic;
 
 namespace Pong.Scene
@@ -24,6 +25,7 @@ namespace Pong.Scene
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            TextureManager.LoadContent(this);
 
             // Only the very first scenes have content loaded here. The rest has their content loaded in AddScene();
             foreach(IScene scene in scenes)
@@ -35,6 +37,7 @@ namespace Pong.Scene
 
         protected override void UnloadContent()
         {
+            TextureManager.UnloadContent();
             foreach (IScene scene in scenes)
             {
                 scene.UnloadContent();

@@ -34,19 +34,18 @@ namespace Pong.Scene
             player = new PlayerShip();
             player.Initialize();
             cash = 0;
-            levelTime = new Timer(15);
+            levelTime = new Timer(16);
         }
 
         public void LoadContent()
         {
-            TextureManager.LoadContent(SceneManager);
             player.Texture = TextureManager.Player;
             font = TextureManager.BaseFont;
         }
 
         public void UnloadContent()
         {
-            TextureManager.UnloadContent();
+
         }
 
         public void Update(GameTime gameTime)

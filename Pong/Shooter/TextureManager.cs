@@ -8,6 +8,7 @@ namespace Pong.Shooter
     class TextureManager
     {
         public static SpriteFont BaseFont { get; set; }
+        public static Texture2D Title { get; set; }
         public static Texture2D Player { get; set; }
         public static Texture2D Grunt { get; set; }
         public static Texture2D BasicGunProjectile { get; set; }
@@ -20,6 +21,7 @@ namespace Pong.Shooter
             blankTexture.SetData(new Color[] { Color.White });
 
             BaseFont = content.Load<SpriteFont>("BaseFont");
+            Title = content.Load<Texture2D>("title");
             Player = content.Load<Texture2D>("player");
             Grunt = content.Load<Texture2D>("grunt");
             BasicGunProjectile = blankTexture;
@@ -28,6 +30,7 @@ namespace Pong.Shooter
 
         public static void UnloadContent()
         {
+            Title.Dispose();
             Player.Dispose();
             Grunt.Dispose();
             BasicGunProjectile.Dispose();
