@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Shooter.Entities;
+using VaporWaves.Shooter.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace Pong.Shooter.Weapons
+namespace VaporWaves.Shooter.Weapons
 {
     class BasicGun : Weapon
     {

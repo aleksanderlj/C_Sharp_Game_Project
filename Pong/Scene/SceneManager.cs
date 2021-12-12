@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Shooter;
+using VaporWaves.Shooter;
 using System.Collections.Generic;
 
-namespace Pong.Scene
+namespace VaporWaves.Scene
 {
     class SceneManager : DrawableGameComponent
     {

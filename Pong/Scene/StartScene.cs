@@ -2,14 +2,14 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.Menu;
-using Pong.Shooter;
-using Pong.Utility;
+using VaporWaves.Menu;
+using VaporWaves.Shooter;
+using VaporWaves.Utility;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Scene
+namespace VaporWaves.Scene
 {
     class StartScene : IScene
     {

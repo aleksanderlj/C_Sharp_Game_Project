@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pong
+namespace VaporWaves
 {
     public static class Program
     {

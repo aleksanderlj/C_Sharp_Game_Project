@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Menu
+namespace VaporWaves.Menu
 {
     class ListMenu
     {

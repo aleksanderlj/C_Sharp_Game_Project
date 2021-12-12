@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Shooter.Entities.Enemies
+namespace VaporWaves.Shooter.Entities.Enemies
 {
     abstract class Enemy : Entity
     {

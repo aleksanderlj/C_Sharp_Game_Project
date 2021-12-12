@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.Shooter;
-using Pong.Shooter.Entities;
-using Pong.Shooter.Entities.Enemies;
-using Pong.Shooter.Weapons;
-using Pong.Utility;
+using VaporWaves.Shooter;
+using VaporWaves.Shooter.Entities;
+using VaporWaves.Shooter.Entities.Enemies;
+using VaporWaves.Shooter.Weapons;
+using VaporWaves.Utility;
 using System;
 using System.Collections.Generic;
 
-namespace Pong.Scene
+namespace VaporWaves.Scene
 {
     class ShooterScene : IScene
     {
@@ -133,10 +133,10 @@ namespace Pong.Scene
             }
 
             //DrawUtility.drawBorder(spriteBatch, player.Hitbox, Color.Red, 2); //Debug
-            Vector2 levelPosition = new Vector2((view.Width / 2) - (font.MeasureString("Level " + enemySpawner.Difficulty).X / 2), 20);
+            Vector2 levelPosition = new Vector2((view.Width / 2) - (font.MeasureString("Wave " + enemySpawner.Difficulty).X / 2), 20);
             Vector2 timerPosition = new Vector2(levelPosition.X, levelPosition.Y + font.MeasureString(((int)levelTime.Remaining).ToString()).Y);
             spriteBatch.DrawString(font, "$" + cash.ToString(), new Vector2(20, 20), Color.White);
-            spriteBatch.DrawString(font, "Level " + enemySpawner.Difficulty, levelPosition, Color.White);
+            spriteBatch.DrawString(font, "Wave " + enemySpawner.Difficulty, levelPosition, Color.White);
             spriteBatch.DrawString(font, "Time: " + ((int)levelTime.Remaining).ToString(), timerPosition, Color.White);
 
             spriteBatch.End();

@@ -1,4 +1,4 @@
-﻿namespace Pong.Shooter.Weapons
+﻿namespace VaporWaves.Shooter.Weapons
 {
     enum Origin
     {

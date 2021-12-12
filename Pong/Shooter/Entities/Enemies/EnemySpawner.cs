@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Pong.Shooter.Entities.Enemies
+namespace VaporWaves.Shooter.Entities.Enemies
 {
     class EnemySpawner
     {

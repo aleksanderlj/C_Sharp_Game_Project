@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Scene;
-using Pong.Shooter.Weapons;
+using VaporWaves.Scene;
+using VaporWaves.Shooter.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Shooter.Entities.Enemies
+namespace VaporWaves.Shooter.Entities.Enemies
 {
     class Grunt : Enemy
     {

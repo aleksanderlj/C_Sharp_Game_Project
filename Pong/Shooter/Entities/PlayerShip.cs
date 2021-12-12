@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Scene;
-using Pong.Shooter.Weapons;
+using VaporWaves.Scene;
+using VaporWaves.Shooter.Weapons;
 using System.Collections.Generic;
 
-namespace Pong.Shooter.Entities
+namespace VaporWaves.Shooter.Entities
 {
     class PlayerShip : Entity 
     {

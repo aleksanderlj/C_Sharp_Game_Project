@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Shooter.Entities
+namespace VaporWaves.Shooter.Entities
 {
     abstract class Entity
     {

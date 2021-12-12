@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.Scene;
+using VaporWaves.Scene;
 using System;
 
-namespace Pong
+namespace VaporWaves
 {
     public class Game1 : Game
     {

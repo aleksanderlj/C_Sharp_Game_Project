@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Pong.Shooter.Entities;
+using VaporWaves.Shooter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pong.Shooter.Weapons
+namespace VaporWaves.Shooter.Weapons
 {
     abstract class Weapon
     {

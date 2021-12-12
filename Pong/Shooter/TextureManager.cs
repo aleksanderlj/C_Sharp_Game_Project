@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Scene;
+using VaporWaves.Scene;
 
-namespace Pong.Shooter
+namespace VaporWaves.Shooter
 {
     class TextureManager
     {

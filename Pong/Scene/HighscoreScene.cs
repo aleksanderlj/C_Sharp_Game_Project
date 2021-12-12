@@ -6,9 +6,9 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
-using Pong.Shooter;
+using VaporWaves.Shooter;
 
-namespace Pong.Scene
+namespace VaporWaves.Scene
 {
     class HighscoreScene : IScene
     {
@@ -80,6 +80,8 @@ namespace Pong.Scene
                     spriteBatch.DrawString(font, (i+1).ToString() + ". ----", basePosition + offset, Color.White);
                 }
             }
+
+            spriteBatch.DrawString(font, "F5 to restart", basePosition + new Vector2(0, (10 * font.MeasureString("1. $0000")).Y + 20), Color.CornflowerBlue);
 
             spriteBatch.End();
         }
