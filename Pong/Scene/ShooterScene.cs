@@ -15,6 +15,7 @@ namespace Pong.Scene
         private PlayerShip player;
         private List<Projectile> projectiles;
         private List<Enemy> enemies;
+        private EnemySpawner enemySpawner;
 
         public SceneManager SceneManager { get; set; }
 
@@ -23,15 +24,15 @@ namespace Pong.Scene
             Viewport view = SceneManager.GraphicsDevice.Viewport;
             projectiles = new List<Projectile>();
             enemies = new List<Enemy>();
+            enemySpawner = new EnemySpawner();
             player = new PlayerShip();
-            player.Initialize(view);
+            player.Initialize();
         }
 
         public void LoadContent()
         {
             TextureManager.LoadContent(SceneManager.GraphicsDevice);
             player.Texture = TextureManager.Player;
-            enemies.Add(new Grunt(SceneManager.GraphicsDevice.Viewport));
         }
 
         public void UnloadContent()
@@ -41,6 +42,7 @@ namespace Pong.Scene
 
         public void Update(GameTime gameTime)
         {
+            // Player behavior
             KeyboardState kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Up))
             {
@@ -65,12 +67,15 @@ namespace Pong.Scene
 
             player.UpdateMovement(gameTime);
 
+            // Enemy behavior
             foreach (Enemy e in enemies)
             {
                 e.UpdateMovement(gameTime);
                 projectiles.AddRange(e.Shoot(gameTime));
             }
+            enemies.AddRange(enemySpawner.Spawn(gameTime));
 
+            // Projectile behavior
             for (int i = projectiles.Count - 1; i >= 0; i--)
             {
                 Projectile p = projectiles[i];

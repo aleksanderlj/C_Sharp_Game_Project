@@ -6,7 +6,7 @@ namespace Pong.Scene
 {
     class SceneManager : DrawableGameComponent
     {
-        public SpriteBatch SpriteBatch { get; set; } // Shared SpriteBatch for scenes
+        public static SpriteBatch SpriteBatch; // Shared SpriteBatch for scenes
         private Game game;
         private List<IScene> scenes = new List<IScene>();
         private List<IScene> scenesToUpdate = new List<IScene>();

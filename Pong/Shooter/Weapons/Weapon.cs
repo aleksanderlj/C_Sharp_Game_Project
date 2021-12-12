@@ -8,22 +8,15 @@ namespace Pong.Shooter.Weapons
 {
     abstract class Weapon
     {
-        protected double Cooldown;
-        private double _countdown;
-        private double _lastTime = 0;
-        public abstract List<Projectile> Shoot(GameTime gameTime, Vector2 position);
-        protected bool IsReady(double time)
+        private Timer _cooldown;
+        public Weapon(double cooldown)
         {
-            _countdown -= time - _lastTime;
-            _lastTime = time;
-            if(_countdown < 0.0)
-            {
-                _countdown = Cooldown;
-                return true;
-            } else
-            {
-                return false;
-            }
+            _cooldown = new Timer(cooldown);
+        }
+        public abstract List<Projectile> Shoot(GameTime gameTime, Vector2 position);
+        protected bool IsReady(GameTime gameTime)
+        {
+            return _cooldown.TimeIsUp(gameTime);
         }
     }
 }

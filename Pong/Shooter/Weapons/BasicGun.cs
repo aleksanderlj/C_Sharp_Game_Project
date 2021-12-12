@@ -8,15 +8,13 @@ namespace Pong.Shooter.Weapons
 {
     class BasicGun : Weapon
     {
-        public BasicGun()
-        {
-            Cooldown = 0.5;
-        }
+        private const double BaseCooldown = 0.5;
+        public BasicGun() : base(cooldown: BaseCooldown) { }
         public override List<Projectile> Shoot(GameTime gameTime, Vector2 position)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
-            if (IsReady(gameTime.TotalGameTime.TotalSeconds))
+            if (IsReady(gameTime))
             {
                 Projectile bullet = new Projectile(Origin.Friendly);
                 bullet.Texture = TextureManager.BasicGunProjectile;

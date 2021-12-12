@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pong.Scene;
 using Pong.Shooter.Weapons;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,9 @@ namespace Pong.Shooter.Entities.Enemies
     class Grunt : Enemy
     {
         Weapon weapon;
-        public Grunt(Viewport view)
+        public Grunt()
         {
+            Viewport view = SceneManager.SpriteBatch.GraphicsDevice.Viewport;
             int width = 60;
             int height = 50;
             Random rnd = new Random();
@@ -33,16 +35,14 @@ namespace Pong.Shooter.Entities.Enemies
 
         public class GruntGun : Weapon
         {
-            public GruntGun()
-            {
-                Cooldown = 1.5;
-            }
+            private const double BaseCooldown = 1.5;
+            public GruntGun() : base(cooldown: BaseCooldown) { }
 
             public override List<Projectile> Shoot(GameTime gameTime, Vector2 position)
             {
                 List<Projectile> projectiles = new List<Projectile>();
 
-                if (IsReady(gameTime.TotalGameTime.TotalSeconds))
+                if (IsReady(gameTime))
                 {
                     Projectile bullet = new Projectile(Origin.Hostile);
                     bullet.Texture = TextureManager.GruntGunProjectile;

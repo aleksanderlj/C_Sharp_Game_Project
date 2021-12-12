@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pong.Scene;
 using Pong.Shooter.Weapons;
 using System.Collections.Generic;
 
@@ -11,9 +12,9 @@ namespace Pong.Shooter.Entities
         private List<Weapon> weapons = new List<Weapon>();
         private Viewport view;
 
-        public void Initialize(Viewport view)
+        public void Initialize()
         {
-            this.view = view;
+            this.view = SceneManager.SpriteBatch.GraphicsDevice.Viewport;
             Position = new Vector2(view.Width / 10, view.Height / 2);
             Hitbox = new Rectangle(0, 0, 70, 35);
             Color = Color.DarkGoldenrod;
