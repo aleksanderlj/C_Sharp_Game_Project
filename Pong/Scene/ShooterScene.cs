@@ -96,8 +96,7 @@ namespace Pong.Scene
                 if (p.Origin == Origin.Hostile && p.Hitbox.Intersects(player.Hitbox))
                 {
                     projectiles.RemoveAt(i);
-                    SceneManager.AddScene(new HighscoreScene(cash));
-                    SceneManager.RemoveScene(this);
+                    lose();
                     continue;
                 } else if (p.Origin == Origin.Friendly)
                 {
@@ -156,6 +155,12 @@ namespace Pong.Scene
                 position.X > view.Bounds.Right      ||
                 position.Y > view.Bounds.Bottom     ||
                 position.X < view.Bounds.Top;
+        }
+
+        private void lose()
+        {
+            SceneManager.AddScene(new HighscoreScene(cash));
+            SceneManager.RemoveScene(this);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Pong.Shooter.Weapons
             {
                 Projectile bullet = new Projectile(Origin.Friendly);
                 bullet.Texture = TextureManager.BasicGunProjectile;
-                bullet.Color = Color.Green;
+                bullet.Color = Color.GreenYellow;
                 bullet.Position = position;
                 bullet.Velocity = new Vector2(1000, 0);
                 bullet.Dampening = Vector2.One;

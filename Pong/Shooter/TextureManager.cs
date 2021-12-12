@@ -20,8 +20,8 @@ namespace Pong.Shooter
             blankTexture.SetData(new Color[] { Color.White });
 
             BaseFont = content.Load<SpriteFont>("BaseFont");
-            Player = blankTexture;
-            Grunt = blankTexture;
+            Player = content.Load<Texture2D>("player");
+            Grunt = content.Load<Texture2D>("grunt");
             BasicGunProjectile = blankTexture;
             GruntGunProjectile = blankTexture;
         }

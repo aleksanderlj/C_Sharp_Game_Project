@@ -17,7 +17,7 @@ namespace Pong.Shooter.Entities
             this.view = SceneManager.SpriteBatch.GraphicsDevice.Viewport;
             Position = new Vector2(view.Width / 10, view.Height / 2);
             Hitbox = new Rectangle(0, 0, 70, 35);
-            Color = Color.DarkGoldenrod;
+            Color = Color.White;
             Dampening = new Vector2(0.90f, 0.90f);
             AddWeapon(new BasicGun());
         }

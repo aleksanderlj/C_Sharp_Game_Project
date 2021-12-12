@@ -14,15 +14,15 @@ namespace Pong.Shooter.Entities.Enemies
         public Grunt()
         {
             Viewport view = SceneManager.SpriteBatch.GraphicsDevice.Viewport;
-            int width = 60;
-            int height = 50;
+            int width = 70;
+            int height = 60;
             Random rnd = new Random();
 
             Score = 100;
             weapon = new GruntGun();
             Position = new Vector2(view.Width + width, rnd.Next(50, view.Height - (height + 50)));
             Hitbox = new Rectangle(0, 0, width, height);
-            Color = Color.DarkGoldenrod;
+            Color = Color.White;
             Velocity = new Vector2(rnd.Next(-2000, -1000), rnd.Next(-200, 200));
             Dampening = new Vector2(0.90f, 0.90f);
             Texture = TextureManager.Grunt;
