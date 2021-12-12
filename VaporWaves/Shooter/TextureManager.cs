@@ -8,6 +8,7 @@ namespace VaporWaves.Shooter
     class TextureManager
     {
         public static SpriteFont BaseFont { get; set; }
+        public static SpriteFont BaseFontSmall { get; set; }
         public static Texture2D Title { get; set; }
         public static Texture2D Player { get; set; }
         public static Texture2D Grunt { get; set; }
@@ -21,6 +22,7 @@ namespace VaporWaves.Shooter
             blankTexture.SetData(new Color[] { Color.White });
 
             BaseFont = content.Load<SpriteFont>("BaseFont");
+            BaseFontSmall = content.Load<SpriteFont>("BaseFontSmall");
             Title = content.Load<Texture2D>("title");
             Player = content.Load<Texture2D>("player");
             Grunt = content.Load<Texture2D>("grunt");

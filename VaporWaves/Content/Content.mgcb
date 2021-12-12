@@ -32,6 +32,13 @@
 /processorParam:TextureFormat=Compressed
 /build:BaseFont.spritefont
 
+#begin BaseFontSmall.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BaseFontSmall.spritefont
+
 #begin grunt.png
 /importer:TextureImporter
 /processor:TextureProcessor

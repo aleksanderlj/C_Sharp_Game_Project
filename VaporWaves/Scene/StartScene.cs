@@ -14,6 +14,7 @@ namespace VaporWaves.Scene
     class StartScene : IScene
     {
         SpriteFont font;
+        SpriteFont fontSmall;
         ListMenu startMenu;
         KeyboardState lastKeyState;
 
@@ -22,13 +23,15 @@ namespace VaporWaves.Scene
         public void Initialize()
         {
             this.startMenu = new ListMenu();
-            this.startMenu.AddOption(new MenuOption("Shooter", new MenuOption.Action(() => SceneManager.AddScene(new ShooterScene()))));
-            this.startMenu.AddOption(new MenuOption("Pong", new MenuOption.Action(() => SceneManager.AddScene(new PongScene()))));
+            this.startMenu.AddOption(new MenuOption("Start game", new MenuOption.Action(() => SceneManager.AddScene(new ShooterScene()))));
+            this.startMenu.AddOption(new MenuOption("Highscore", new MenuOption.Action(() => SceneManager.AddScene(new HighscoreScene()))));
+            this.startMenu.AddOption(new MenuOption("Pong?", new MenuOption.Action(() => SceneManager.AddScene(new PongScene()))));
             this.startMenu.AddOption(new MenuOption("Quit", new MenuOption.Action(() => SceneManager.ExitGame())));
         }
         public void LoadContent()
         {
             font = TextureManager.BaseFont;
+            fontSmall = TextureManager.BaseFontSmall;
         }
 
         public void UnloadContent()
@@ -39,7 +42,7 @@ namespace VaporWaves.Scene
         public void Update(GameTime gameTime)
         {
             KeyboardState kstate = Keyboard.GetState();
-            if (kstate.IsKeyDown(Keys.Enter))
+            if (kstate.IsKeyDown(Keys.Enter) || kstate.IsKeyDown(Keys.Space))
             {
                 startMenu.Choose();
                 SceneManager.RemoveScene(this);
@@ -71,6 +74,7 @@ namespace VaporWaves.Scene
             */
 
             drawMenu(startMenu, new Vector2(view.Width / 2, view.Height / 2));
+            spriteBatch.DrawString(fontSmall, "By Aleksander L. J.", new Vector2(0, view.Bounds.Bottom - fontSmall.MeasureString("W").Y), Color.White);
 
             spriteBatch.End();
         }

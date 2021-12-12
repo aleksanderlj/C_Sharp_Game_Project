@@ -26,6 +26,12 @@ namespace VaporWaves.Scene
             newRow.New = true;
         }
 
+        public HighscoreScene()
+        {
+            newRow = new HighScoreRow();
+            newRow.New = false;
+        }
+
         public void Initialize()
         {
             _storagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VaporWaves");
@@ -81,7 +87,7 @@ namespace VaporWaves.Scene
                 }
             }
 
-            spriteBatch.DrawString(font, "F5 to restart", basePosition + new Vector2(0, (10 * font.MeasureString("1. $0000")).Y + 20), Color.CornflowerBlue);
+            spriteBatch.DrawString(font, "F5 to go back", basePosition + new Vector2(0, (10 * font.MeasureString("1. $0000")).Y + 20), Color.CornflowerBlue);
 
             spriteBatch.End();
         }
