@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Shooter;
@@ -6,16 +7,21 @@ using Pong.Shooter.Entities;
 using Pong.Shooter.Entities.Enemies;
 using Pong.Shooter.Weapons;
 using Pong.Utility;
+using System;
 using System.Collections.Generic;
 
 namespace Pong.Scene
 {
     class ShooterScene : IScene
     {
+        SpriteFont font;
+
         private PlayerShip player;
         private List<Projectile> projectiles;
         private List<Enemy> enemies;
         private EnemySpawner enemySpawner;
+        private int cash;
+        private Timer levelTime;
 
         public SceneManager SceneManager { get; set; }
 
@@ -24,15 +30,18 @@ namespace Pong.Scene
             Viewport view = SceneManager.GraphicsDevice.Viewport;
             projectiles = new List<Projectile>();
             enemies = new List<Enemy>();
-            enemySpawner = new EnemySpawner();
+            enemySpawner = new EnemySpawner(0);
             player = new PlayerShip();
             player.Initialize();
+            cash = 0;
+            levelTime = new Timer(15);
         }
 
         public void LoadContent()
         {
-            TextureManager.LoadContent(SceneManager.GraphicsDevice);
+            TextureManager.LoadContent(SceneManager);
             player.Texture = TextureManager.Player;
+            font = TextureManager.BaseFont;
         }
 
         public void UnloadContent()
@@ -42,6 +51,11 @@ namespace Pong.Scene
 
         public void Update(GameTime gameTime)
         {
+            if (levelTime.TimeIsUp(gameTime))
+            {
+                enemySpawner.Difficulty += 1;
+            }
+
             // Player behavior
             KeyboardState kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Up))
@@ -82,6 +96,8 @@ namespace Pong.Scene
                 if (p.Origin == Origin.Hostile && p.Hitbox.Intersects(player.Hitbox))
                 {
                     projectiles.RemoveAt(i);
+                    SceneManager.AddScene(new HighscoreScene(cash));
+                    SceneManager.RemoveScene(this);
                     continue;
                 } else if (p.Origin == Origin.Friendly)
                 {
@@ -90,6 +106,7 @@ namespace Pong.Scene
                     {
                         enemies.Remove(e);
                         projectiles.RemoveAt(i);
+                        cash += e.Score;
                         continue;
                     }
                 }
@@ -102,6 +119,7 @@ namespace Pong.Scene
         public void Draw(GameTime gameTime)
         {
             SceneManager.GraphicsDevice.Clear(Color.Black);
+            Viewport view = SceneManager.GraphicsDevice.Viewport;
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             spriteBatch.Begin();
 
@@ -116,7 +134,12 @@ namespace Pong.Scene
                 p.Draw(spriteBatch);
             }
 
-            DrawUtility.drawBorder(spriteBatch, player.Hitbox, Color.Red, 2); //Debug
+            //DrawUtility.drawBorder(spriteBatch, player.Hitbox, Color.Red, 2); //Debug
+            Vector2 levelPosition = new Vector2((view.Width / 2) - (font.MeasureString("Level " + enemySpawner.Difficulty).X / 2), 20);
+            Vector2 timerPosition = new Vector2(levelPosition.X, levelPosition.Y + font.MeasureString(((int)levelTime.Remaining).ToString()).Y);
+            spriteBatch.DrawString(font, "$" + cash.ToString(), new Vector2(20, 20), Color.White);
+            spriteBatch.DrawString(font, "Level " + enemySpawner.Difficulty, levelPosition, Color.White);
+            spriteBatch.DrawString(font, "Time: " + ((int)levelTime.Remaining).ToString(), timerPosition, Color.White);
 
             spriteBatch.End();
         }

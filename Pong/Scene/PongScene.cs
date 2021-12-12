@@ -57,7 +57,7 @@ namespace Pong.Scene
         public void LoadContent()
         {
             ContentManager content = SceneManager.Game.Content;
-            scoreFont = content.Load<SpriteFont>("Score");
+            scoreFont = content.Load<SpriteFont>("BaseFont");
             ballTexture = content.Load<Texture2D>("ball");
 
             Color[] paddleData = new Color[paddleWidth * paddleHeight];

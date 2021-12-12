@@ -18,6 +18,7 @@ namespace Pong.Shooter.Entities.Enemies
             int height = 50;
             Random rnd = new Random();
 
+            Score = 100;
             weapon = new GruntGun();
             Position = new Vector2(view.Width + width, rnd.Next(50, view.Height - (height + 50)));
             Hitbox = new Rectangle(0, 0, width, height);

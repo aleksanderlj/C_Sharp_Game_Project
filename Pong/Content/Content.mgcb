@@ -25,10 +25,10 @@
 /processorParam:TextureFormat=Color
 /build:ball.png
 
-#begin Score.spritefont
+#begin BaseFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Score.spritefont
+/build:BaseFont.spritefont
 

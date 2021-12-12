@@ -21,14 +21,14 @@ namespace Pong.Scene
         public void Initialize()
         {
             this.startMenu = new ListMenu();
-            this.startMenu.AddOption(new MenuOption("Pong", new MenuOption.Action(() => SceneManager.AddScene(new PongScene()))));
             this.startMenu.AddOption(new MenuOption("Shooter", new MenuOption.Action(() => SceneManager.AddScene(new ShooterScene()))));
+            this.startMenu.AddOption(new MenuOption("Pong", new MenuOption.Action(() => SceneManager.AddScene(new PongScene()))));
             this.startMenu.AddOption(new MenuOption("Quit", new MenuOption.Action(() => SceneManager.ExitGame())));
         }
         public void LoadContent()
         {
             ContentManager content = SceneManager.Game.Content;
-            font = content.Load<SpriteFont>("Score");
+            font = content.Load<SpriteFont>("BaseFont");
         }
 
         public void UnloadContent()
@@ -59,6 +59,7 @@ namespace Pong.Scene
         {
             SpriteBatch spriteBatch = SceneManager.SpriteBatch;
             Viewport view = SceneManager.GraphicsDevice.Viewport;
+            SceneManager.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
 
@@ -79,7 +80,9 @@ namespace Pong.Scene
             for (int i = 0; i < menu.Options.Count; i++)
             {
                 String text = menu.Options[i].Text;
-                Vector2 relativePosition = new Vector2(position.X, position.Y + (i * font.MeasureString("W").Y));
+                Vector2 relativePosition = new Vector2(
+                    position.X - (font.MeasureString(text).X / 2),
+                    position.Y + (i * font.MeasureString("W").Y));
                 spriteBatch.DrawString(font, text, relativePosition, Color.White);
 
                 if(menu.Index == i)

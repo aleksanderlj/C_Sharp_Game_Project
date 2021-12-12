@@ -5,13 +5,31 @@ namespace Pong.Shooter.Entities.Enemies
 {
     class EnemySpawner
     {
-        public int Difficulty { get; set; }
+        private int _difficulty;
+        public int Difficulty
+        {
+            get { return _difficulty; }
+            set
+            {
+                _difficulty = value;
+
+                double grunt = GruntFrequency;
+
+                for (int i = 0; i < value; i++)
+                {
+                    grunt *= 0.9;
+                }
+
+                _gruntTimer = new Timer(grunt);
+            }
+        }
         private const double GruntFrequency = 5;
         private Timer _gruntTimer;
-        public EnemySpawner()
+        public EnemySpawner(int difficulty)
         {
-            _gruntTimer = new Timer(GruntFrequency);
+            Difficulty = difficulty;
         }
+
         public List<Enemy> Spawn(GameTime gameTime)
         {
             List<Enemy> enemies = new List<Enemy>();
